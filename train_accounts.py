@@ -1,5 +1,5 @@
-# preprocess.py
-# preprocesses MIB dataset for Glove embedding
+# train_tweets.py
+# trains and tests classifier using account metadata
 
 import numpy as np
 import glob
@@ -42,8 +42,12 @@ X = X.fillna(value=0)
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2)
+
+
 sme = SMOTEENN(smote=SMOTE(k_neighbors=10))
 X_train, y_train = sme.fit_resample(X_train, y_train)
+
+# Select base estimator
 # rfc = RandomForestClassifier(n_estimators=1000, n_jobs=-1)
 gbc = GradientBoostingClassifier(loss='exponential')
 

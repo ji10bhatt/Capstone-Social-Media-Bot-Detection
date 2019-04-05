@@ -1,5 +1,5 @@
-# preprocess.py
-# preprocesses MIB dataset for Glove embedding
+# train_tweets.py
+# Trains and tests classifier using tweet metadata
 
 import numpy as np
 import glob
@@ -45,7 +45,7 @@ def hasRepeatedLetters(word):
 
 
 tweet_files = glob.glob(DIR + '*/tweets.csv')
-# print(tweet_files)
+
 data = []
 file_paths = []
 for file_path in tweet_files:
@@ -55,6 +55,9 @@ for file_path in tweet_files:
         tweet_set["isGenuine"] = 1
     data.append(tweet_set)
     file_paths.append(file_path)
+
+
+# Commented out text substitutions; currently only using metadata
 
 # redact #[...] with <hashtag>, @[...] with <user>, urls with <url>
 # for x in range(len(data)):
@@ -78,12 +81,13 @@ dataset = pd.concat([d[COLUMN_NAMES] for d in data])
 
 y = dataset["isGenuine"]
 X = dataset.drop('isGenuine', axis=1)
-# X = X.fillna(value=0)
 
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2)
 sme = SMOTEENN(smote=SMOTE(k_neighbors=10))
 X_train, y_train = sme.fit_resample(X_train, y_train)
+
+# Select base estimator
 # rfc = RandomForestClassifier(n_estimators=1000, n_jobs=-1)
 gbc = GradientBoostingClassifier(loss='exponential')
 
@@ -103,12 +107,8 @@ print("Recall Score", recall_score(y_test, y_pred))
 print("F1 Score", f1_score(y_test, y_pred))
 print("ROC/AUC Score", roc_auc_score(y_test, y_scores))
 
-#Accuracy: 0.9158333333333334
+# Accuracy: 0.9158333333333334
 # Precision Score 0.688
 # Recall Score 0.882051282051282
 # F1 Score 0.7730337078651686
 # ROC/AUC Score 0.9497691032019391
-
-# for (df, file_path) in zip(data, file_paths):
-#     print("Filepath: " + file_path)
-#     print(df)
