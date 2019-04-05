@@ -49,7 +49,7 @@ tweet_files = glob.glob(DIR + '*/tweets.csv')
 data = []
 file_paths = []
 for file_path in tweet_files:
-    tweet_set = pd.read_csv(file_path, delimiter=',', dtype=str, nrows=1000)
+    tweet_set = pd.read_csv(file_path, delimiter=',', dtype=str)
     tweet_set["isGenuine"] = 0
     if file_path == "datasets_full.csv/datasets_full.csv/genuine_accounts.csv/tweets.csv":
         tweet_set["isGenuine"] = 1
@@ -102,7 +102,13 @@ print("Precision Score", precision_score(y_test, y_pred))
 print("Recall Score", recall_score(y_test, y_pred))
 print("F1 Score", f1_score(y_test, y_pred))
 print("ROC/AUC Score", roc_auc_score(y_test, y_scores))
-#
+
+#Accuracy: 0.9158333333333334
+# Precision Score 0.688
+# Recall Score 0.882051282051282
+# F1 Score 0.7730337078651686
+# ROC/AUC Score 0.9497691032019391
+
 # for (df, file_path) in zip(data, file_paths):
 #     print("Filepath: " + file_path)
 #     print(df)
