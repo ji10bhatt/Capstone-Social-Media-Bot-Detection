@@ -2,6 +2,10 @@
 
 #### Purpose: part of University of Virginia capstone research project by Jiten Bhatt under supervision of Professor David Evans
 
+### Dataset
+Access can be requested for research purposes at:
+http://mib.projects.iit.cnr.it/dataset.html
+
 ### Current Results:
 
 #### Account metadata classifier:
